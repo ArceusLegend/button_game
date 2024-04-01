@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ButtonGame" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- REQUIRED TO OVERRIDE DEFAULT OF PURPLE-->
+        <item name="colorPrimary">@null</item>
+
+    </style>
+
+    <style name="Theme.ButtonGame" parent="Base.Theme.ButtonGame" />
+
+    <style name="button_style" parent="Widget.AppCompat.Button" >
+        <item name="android:background">@drawable/button_style</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="text_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+    </style>
+</resources>

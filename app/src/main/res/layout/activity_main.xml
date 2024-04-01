@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context=".MainActivity">
+
+    <android.widget.Button
+        android:id="@+id/play_button"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="364dp"
+        android:text="Play"
+        android:textAllCaps="false"
+        style="@style/button_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.Button
+        android:id="@+id/about_button"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="588dp"
+        android:text="About"
+        android:textAllCaps="false"
+        style="@style/button_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.widget.Button
+        android:id="@+id/score_button"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="476dp"
+        android:text="Scoreboard"
+        android:textAllCaps="false"
+        style="@style/button_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
