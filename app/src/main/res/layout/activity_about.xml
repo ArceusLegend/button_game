@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -9,17 +8,76 @@
     android:orientation="vertical"
     tools:context=".AboutActivity">
 
-    <EditText
-        android:id="@+id/textView"
-        style="@style/text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="A simple button masher game for my assignment in mobile development
-at IEK Galatsiou"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:id="@+id/scroller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="92dp">
+
+        <LinearLayout
+            android:id="@+id/text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:alpha="1.0">
+
+            <TextView
+                android:id="@+id/about_text_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="text"
+                android:hint="@string/text_hint"
+                android:text="@string/about_text_1"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/about_text_2"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:autofillHints="text"
+                android:ems="10"
+                android:hint="@string/text_hint"
+                android:text="@string/about_text_2"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/about_text_3"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:autofillHints="text"
+                android:ems="10"
+                android:hint="@string/text_hint"
+                android:text="@string/about_text_3"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
