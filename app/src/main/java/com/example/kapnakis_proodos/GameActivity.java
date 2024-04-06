@@ -1,15 +1,17 @@
 package com.example.kapnakis_proodos;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.text.MessageFormat;
 
@@ -25,12 +27,28 @@ public class GameActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game);
+        // Initialize buttons
+        Button plusButton = findViewById(R.id.plus_button);
+        ViewGroup.LayoutParams initPlusButtonParams = plusButton.getLayoutParams();
+        Button minusButton = findViewById(R.id.minus_button);
+        ViewGroup.LayoutParams initMinusButtonParams = minusButton.getLayoutParams();
         // Get screen dimensions
         screenWidth = getWindowManager().getCurrentWindowMetrics().getBounds().width();
         screenHeight = getWindowManager().getCurrentWindowMetrics().getBounds().height();
         TextView timer_text = findViewById(R.id.timer);
+        // Configure TextView here because activity xml is not very accurate
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.endToEnd = ConstraintSet.PARENT_ID;
+        layoutParams.startToStart = ConstraintSet.PARENT_ID;
+        layoutParams.topToTop = ConstraintSet.PARENT_ID;
+        layoutParams.topMargin = (int) (screenHeight * 0.10);
+        timer_text.setLayoutParams(layoutParams);
+        timer_text.setTextSize(40);
         timer_text.setText(R.string.click_any_of_the_breads_to_start);
-        CountDownTimer timer = new CountDownTimer(30000, 1000) {
+        CountDownTimer timer = new CountDownTimer(100, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timer_text.setText(MessageFormat.format(
@@ -41,6 +59,20 @@ public class GameActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 timer_text.setText(R.string.time_up);
+                // Remove bread buttons.
+                ConstraintLayout layout = findViewById(R.id.layout);
+                layout.removeView(plusButton);
+                layout.removeView(minusButton);
+                Button backButton = new Button(getApplicationContext());
+                backButton.setLayoutParams(initPlusButtonParams);
+                backButton.setBackgroundResource(R.drawable.button_style);
+                backButton.setText(R.string.back_to_menu);
+                layout.addView(backButton);
+                Button retryButton = new Button(getApplicationContext());
+                retryButton.setLayoutParams(initMinusButtonParams);
+                retryButton.setBackgroundResource(R.drawable.button_style);
+                retryButton.setText("VVVINUJBHJB");
+                layout.addView(retryButton);
             }
         };
         TextView scoreText = findViewById(R.id.score);
@@ -50,8 +82,6 @@ public class GameActivity extends BaseActivity {
                 score
                 )
         );
-        Button plusButton = findViewById(R.id.plus_button);
-        Button minusButton = findViewById(R.id.minus_button);
         plusButton.setOnClickListener(v -> {
             if(!timer_running) {
                 timer.start();
@@ -86,8 +116,6 @@ public class GameActivity extends BaseActivity {
 
     private void randomise_position(Button button1, Button button2) {
         List<Button> buttons = Arrays.asList(button1, button2);
-        List<Integer> coordsList = new ArrayList<>();
-        int index = 0;
         int randomX;
         int randomY;
         for (Button button : buttons) {
@@ -100,10 +128,6 @@ public class GameActivity extends BaseActivity {
             randomX = Math.min(randomX, max_width - buttonPadding);
             randomY = Math.max(randomY, button.getHeight() + buttonPadding);
             randomY = Math.min(randomY, max_height - buttonPadding);
-            coordsList.add(index, randomX);
-            index++;
-            coordsList.add(index, randomY);
-            index++;
             button.setX(randomX);
             button.setY(randomY);
         }
