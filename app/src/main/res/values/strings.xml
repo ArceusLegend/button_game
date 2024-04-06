@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">kapnakis_proodos</string>
+    <string name="app_name">Button Game</string>
+    <string name="about_text_1">
+        Hello, my name is Markos Kapnakis. I made this simple button masher game for my assignment in mobile development at IEK Galatsiou
+    </string>
+    <string name="about_text_2">
+        The rules are simple:\n\n
+        \t&#8226; Tapping the good bread gives you +1 points\n
+        \t&#8226; Tapping the evil bread gives you -1 points\n
+        \t&#8226; You have 1 minute to tap the good bread as many times as you can
+    </string>
+    <string name="about_text_3">
+        This project ended up being far more complicated than it needed to be all things considered,
+        but I wanted to have fun with ti and thought I should upload it on my <a href="https://github.com/ArceusLegend/button_game">GitHub</a>.
+        with all the source code and credits for the art I used
+    </string>
+    <string name="text_hint">If you can\'t view this text, go the github repo <a href="https://github.com/ArceusLegend/button_game">here</a></string>
 </resources>
