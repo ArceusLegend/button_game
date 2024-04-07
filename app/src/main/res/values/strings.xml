@@ -14,5 +14,11 @@
         but I wanted to have fun with ti and thought I should upload it on my <a href="https://github.com/ArceusLegend/button_game">GitHub</a>.
         with all the source code and credits for the art I used
     </string>
-    <string name="text_hint">If you can\'t view this text, go the github repo <a href="https://github.com/ArceusLegend/button_game">here</a></string>
+    <string name="text_hint">If you can\'t view this text, go the <a href="https://github.com/ArceusLegend/button_game">github repo</a></string>
+    <string name="time_up">Time up!</string>
+    <string name="click_any_of_the_breads_to_start">Click any of the breads to start…</string>
+    <string name="time_left">"Time left: "</string>
+    <string name="current_score">"Current score: "</string>
+    <string name="back_to_menu">Back to menu</string>
+    <string name="try_again">Try again</string>
 </resources>
