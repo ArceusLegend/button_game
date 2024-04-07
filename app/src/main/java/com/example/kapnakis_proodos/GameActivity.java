@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -37,16 +39,16 @@ public class GameActivity extends BaseActivity {
         screenHeight = getWindowManager().getCurrentWindowMetrics().getBounds().height();
         TextView timer_text = findViewById(R.id.timer);
         // Configure TextView here because activity xml is not very accurate
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+        ConstraintLayout.LayoutParams infoTextLayoutParams = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.WRAP_CONTENT,
                 ConstraintLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.endToEnd = ConstraintSet.PARENT_ID;
-        layoutParams.startToStart = ConstraintSet.PARENT_ID;
-        layoutParams.topToTop = ConstraintSet.PARENT_ID;
-        layoutParams.topMargin = (int) (screenHeight * 0.10);
-        timer_text.setLayoutParams(layoutParams);
-        timer_text.setTextSize(40);
+        infoTextLayoutParams.endToEnd = ConstraintSet.PARENT_ID;
+        infoTextLayoutParams.startToStart = ConstraintSet.PARENT_ID;
+        infoTextLayoutParams.topToTop = ConstraintSet.PARENT_ID;
+        infoTextLayoutParams.topMargin = (int) (screenHeight * 0.10);
+        timer_text.setLayoutParams(infoTextLayoutParams);
+        timer_text.setTextSize(24);
         timer_text.setText(R.string.click_any_of_the_breads_to_start);
         CountDownTimer timer = new CountDownTimer(100, 1000) {
             @Override
@@ -71,8 +73,19 @@ public class GameActivity extends BaseActivity {
                 Button retryButton = new Button(getApplicationContext());
                 retryButton.setLayoutParams(initMinusButtonParams);
                 retryButton.setBackgroundResource(R.drawable.button_style);
-                retryButton.setText("VVVINUJBHJB");
+                retryButton.setText(R.string.try_again);
                 layout.addView(retryButton);
+                // New button functionality
+                backButton.setOnClickListener(v -> startActivity(
+                        new Intent(GameActivity.this, MainActivity.class)
+                ));
+                retryButton.setOnClickListener(v -> {
+                    Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                });
             }
         };
         TextView scoreText = findViewById(R.id.score);
@@ -82,6 +95,16 @@ public class GameActivity extends BaseActivity {
                 score
                 )
         );
+        ConstraintLayout.LayoutParams scoreTextLayoutParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        scoreTextLayoutParams.endToEnd = ConstraintSet.PARENT_ID;
+        scoreTextLayoutParams.startToStart = ConstraintSet.PARENT_ID;
+        scoreTextLayoutParams.topToTop = ConstraintSet.PARENT_ID;
+        scoreTextLayoutParams.topMargin = (int) (screenHeight * 0.15);
+        scoreText.setLayoutParams(scoreTextLayoutParams);
+        scoreText.setTextSize(22);
         plusButton.setOnClickListener(v -> {
             if(!timer_running) {
                 timer.start();
@@ -95,6 +118,12 @@ public class GameActivity extends BaseActivity {
                     score
                     )
             );
+            if(plusButton.getBackground() == AppCompatResources.getDrawable(getApplicationContext(), R.drawable.super_bread)){
+                plusButton.setBackgroundResource(R.drawable.bread);
+            }
+            else if(random.nextFloat() <= 0.001){
+                plusButton.setBackgroundResource(R.drawable.super_bread);
+            }
         });
         minusButton.setOnClickListener(v -> {
             if(!timer_running) {
@@ -111,6 +140,9 @@ public class GameActivity extends BaseActivity {
                     score
                     )
             );
+            if(plusButton.getBackground() == AppCompatResources.getDrawable(getApplicationContext(), R.drawable.super_bread)){
+                plusButton.setBackgroundResource(R.drawable.bread);
+            }
         });
     }
 
