@@ -1,7 +1,11 @@
 package com.example.kapnakis_proodos;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Random;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.text.MessageFormat;
+import java.util.Set;
 
 public class GameActivity extends BaseActivity {
     int score = 0;
@@ -22,6 +27,7 @@ public class GameActivity extends BaseActivity {
     int screenHeight;
     int buttonPadding = 5; // Add some extra margin to prevent buttons from touching edge of screen
     Random random = new Random();
+    SharedPreferences saveData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +78,11 @@ public class GameActivity extends BaseActivity {
                 retryButton.setLayoutParams(initMinusButtonParams);
                 retryButton.setBackgroundResource(R.drawable.button_style);
                 retryButton.setText(R.string.try_again);
+                // Save data
+                saveData = getSharedPreferences("scoreData", Context.MODE_PRIVATE);
+                saveScore();
+                // Create new buttons and add functionality
                 layout.addView(retryButton);
-                // New button functionality
                 backButton.setOnClickListener(v -> startActivity(
                         new Intent(GameActivity.this, MainActivity.class)
                 ));
@@ -163,5 +172,16 @@ public class GameActivity extends BaseActivity {
                 (randomXMinus >= randomXPlus - minDistance && randomXMinus <= randomXPlus - button1.getWidth() + minDistance) || (randomYMinus >= randomYPlus - minDistance && randomYMinus <= randomYMinus - button1.getHeight() + minDistance));
         button2.setX(randomXMinus);
         button2.setY(randomYMinus);
+    }
+
+    private void saveScore() {
+        // Get the current timestamp as the key for the score data
+        String timestamp = LocalDateTime.now().toString();
+
+        // Update the score data in SharedPreferences
+        SharedPreferences.Editor editor = saveData.edit();
+        Set<String> scoreSet = Collections.singleton("" + score);
+        editor.putStringSet(timestamp, scoreSet);
+        editor.apply();
     }
 }
