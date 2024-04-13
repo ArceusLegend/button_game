@@ -1,6 +1,4 @@
 package com.example.kapnakis_proodos;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import android.content.Intent;
@@ -50,7 +48,7 @@ public class GameActivity extends BaseActivity {
         timer_text.setLayoutParams(infoTextLayoutParams);
         timer_text.setTextSize(24);
         timer_text.setText(R.string.click_any_of_the_breads_to_start);
-        CountDownTimer timer = new CountDownTimer(100, 1000) {
+        CountDownTimer timer = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timer_text.setText(MessageFormat.format(
@@ -147,21 +145,23 @@ public class GameActivity extends BaseActivity {
     }
 
     private void randomise_position(Button button1, Button button2) {
-        List<Button> buttons = Arrays.asList(button1, button2);
-        int randomX;
-        int randomY;
-        for (Button button : buttons) {
-            int max_width = screenWidth - button.getWidth();
-            int max_height = screenHeight - button.getHeight();
-            randomX = random.nextInt(max_width);
-            randomY = random.nextInt(max_height);
-            // Ensure the button remains within the visible area
-            randomX = Math.max(randomX, button.getWidth() + buttonPadding);
-            randomX = Math.min(randomX, max_width - buttonPadding);
-            randomY = Math.max(randomY, button.getHeight() + buttonPadding);
-            randomY = Math.min(randomY, max_height - buttonPadding);
-            button.setX(randomX);
-            button.setY(randomY);
-        }
+        int maxWidth = screenWidth - button1.getWidth() - buttonPadding;
+        int maxHeight = screenHeight - button1.getHeight() - buttonPadding;
+        int minDistance = 20;
+        // Plus button random pos
+        int randomXPlus = random.nextInt(maxWidth);
+        int randomYPlus = random.nextInt(maxHeight);
+        button1.setX(randomXPlus);
+        button1.setY(randomYPlus);
+        // Minus button random pos
+        int randomXMinus;
+        int randomYMinus;
+        do {
+            randomXMinus = random.nextInt(maxWidth);
+            randomYMinus = random.nextInt(maxHeight);
+        }while(
+                (randomXMinus >= randomXPlus - minDistance && randomXMinus <= randomXPlus - button1.getWidth() + minDistance) || (randomYMinus >= randomYPlus - minDistance && randomYMinus <= randomYMinus - button1.getHeight() + minDistance));
+        button2.setX(randomXMinus);
+        button2.setY(randomYMinus);
     }
 }

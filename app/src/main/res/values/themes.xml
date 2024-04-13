@@ -1,12 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.ButtonGame" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ButtonGame" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- REQUIRED TO OVERRIDE DEFAULT OF PURPLE-->
         <item name="colorPrimary">@null</item>
-
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
-
-    <style name="Theme.ButtonGame" parent="Base.Theme.ButtonGame" />
 
     <style name="button_style" parent="Widget.AppCompat.Button" >
         <item name="android:background">@drawable/button_style</item>
@@ -23,10 +23,5 @@
         <item name="android:paddingTop">5dp</item>
     </style>
 
-    <style name="hide_system_bars" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Hide system bars -->
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
 
 </resources>
