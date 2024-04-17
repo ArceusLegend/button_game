@@ -16,7 +16,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Hide status bars
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         // Button style defined in res/drawable/button_style.xml
@@ -28,12 +27,13 @@ public class MainActivity extends BaseActivity {
         ));
         // Score button functionality
         scoreButton = findViewById(R.id.score_button);
+        scoreButton.setOnClickListener(v -> startActivity(
+                new Intent(MainActivity.this, ScoreboardActivity.class)
+        ));
         // About button functionality
         aboutButton = findViewById(R.id.about_button);
         aboutButton.setOnClickListener(v -> startActivity(
-                new Intent(
-                    MainActivity.this, AboutActivity.class
-                )
+                new Intent(MainActivity.this, AboutActivity.class)
         ));
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

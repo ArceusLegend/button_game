@@ -10,8 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ButtonGame"
+        android:theme="@style/Base.Theme.ButtonGame"
         tools:targetApi="31">
+        <meta-data android:name="android.max_aspect" android:value="2.4"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

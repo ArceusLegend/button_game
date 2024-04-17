@@ -1,9 +1,11 @@
 package com.example.kapnakis_proodos;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Random;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.text.MessageFormat;
+import java.util.Set;
 
 public class GameActivity extends BaseActivity {
     int score = 0;
@@ -24,6 +27,7 @@ public class GameActivity extends BaseActivity {
     int screenHeight;
     int buttonPadding = 5; // Add some extra margin to prevent buttons from touching edge of screen
     Random random = new Random();
+    SharedPreferences saveData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +54,7 @@ public class GameActivity extends BaseActivity {
         timer_text.setLayoutParams(infoTextLayoutParams);
         timer_text.setTextSize(24);
         timer_text.setText(R.string.click_any_of_the_breads_to_start);
-        CountDownTimer timer = new CountDownTimer(100, 1000) {
+        CountDownTimer timer = new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timer_text.setText(MessageFormat.format(
@@ -74,8 +78,11 @@ public class GameActivity extends BaseActivity {
                 retryButton.setLayoutParams(initMinusButtonParams);
                 retryButton.setBackgroundResource(R.drawable.button_style);
                 retryButton.setText(R.string.try_again);
+                // Save data
+                saveData = getSharedPreferences("scoreData", Context.MODE_PRIVATE);
+                saveScore();
+                // Create new buttons and add functionality
                 layout.addView(retryButton);
-                // New button functionality
                 backButton.setOnClickListener(v -> startActivity(
                         new Intent(GameActivity.this, MainActivity.class)
                 ));
@@ -147,21 +154,34 @@ public class GameActivity extends BaseActivity {
     }
 
     private void randomise_position(Button button1, Button button2) {
-        List<Button> buttons = Arrays.asList(button1, button2);
-        int randomX;
-        int randomY;
-        for (Button button : buttons) {
-            int max_width = screenWidth - button.getWidth();
-            int max_height = screenHeight - button.getHeight();
-            randomX = random.nextInt(max_width);
-            randomY = random.nextInt(max_height);
-            // Ensure the button remains within the visible area
-            randomX = Math.max(randomX, button.getWidth() + buttonPadding);
-            randomX = Math.min(randomX, max_width - buttonPadding);
-            randomY = Math.max(randomY, button.getHeight() + buttonPadding);
-            randomY = Math.min(randomY, max_height - buttonPadding);
-            button.setX(randomX);
-            button.setY(randomY);
-        }
+        int maxWidth = screenWidth - button1.getWidth() - buttonPadding;
+        int maxHeight = screenHeight - button1.getHeight() - buttonPadding;
+        int minDistance = 20;
+        // Plus button random pos
+        int randomXPlus = random.nextInt(maxWidth);
+        int randomYPlus = random.nextInt(maxHeight);
+        button1.setX(randomXPlus);
+        button1.setY(randomYPlus);
+        // Minus button random pos
+        int randomXMinus;
+        int randomYMinus;
+        do {
+            randomXMinus = random.nextInt(maxWidth);
+            randomYMinus = random.nextInt(maxHeight);
+        }while(
+                (randomXMinus >= randomXPlus - minDistance && randomXMinus <= randomXPlus - button1.getWidth() + minDistance) || (randomYMinus >= randomYPlus - minDistance && randomYMinus <= randomYMinus - button1.getHeight() + minDistance));
+        button2.setX(randomXMinus);
+        button2.setY(randomYMinus);
+    }
+
+    private void saveScore() {
+        // Get the current timestamp as the key for the score data
+        String timestamp = LocalDateTime.now().toString();
+
+        // Update the score data in SharedPreferences
+        SharedPreferences.Editor editor = saveData.edit();
+        Set<String> scoreSet = Collections.singleton("" + score);
+        editor.putStringSet(timestamp, scoreSet);
+        editor.apply();
     }
 }
