@@ -25,4 +25,5 @@
     <string name="clear">Clear scores</string>
     <string name="menu">Back to menu</string>
     <string name="play">Play</string>
+    <string name="your_top_5_scores">Your top 5 scores</string>
 </resources>

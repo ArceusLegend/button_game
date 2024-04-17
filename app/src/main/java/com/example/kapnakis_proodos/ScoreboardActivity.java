@@ -31,7 +31,7 @@ public class ScoreboardActivity extends BaseActivity {
         // Initialize ListView
         scoreView = findViewById(R.id.score_list);
         scoreList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, scoreList);
+        adapter = new ArrayAdapter<>(this, R.layout.list_text, scoreList);
         scoreView.setAdapter(adapter);
         // Scores saved in the device.
         saveData = getSharedPreferences("scoreData", Context.MODE_PRIVATE);
@@ -59,19 +59,15 @@ public class ScoreboardActivity extends BaseActivity {
         // Each key represents a score entry
         // If there are no scores saved yet, an empty set is returned
         Set<String> scoreKeys = saveData.getAll().keySet();
-
         // Create a DateTimeFormatter to format the timestamp
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
         // Create a list to store all score entries
         List<String> allScores = new ArrayList<>();
-
-        // Iterate through each key (timestamp) and retrieve the corresponding score
+        // Iterate through each key and retrieve the corresponding score
         for (String key : scoreKeys) {
-            // Parse the timestamp key to LocalDateTime and format it
+            // Parse the timestamp key with LocalDateTime and format it
             LocalDateTime timestamp = LocalDateTime.parse(key);
             String formattedTimestamp = timestamp.format(formatter);
-
             // Get the score set for the current key
             Set<String> scoreSet = saveData.getStringSet(key, null);
             if (scoreSet != null) {
@@ -83,7 +79,6 @@ public class ScoreboardActivity extends BaseActivity {
                 }
             }
         }
-
         // Sort the allScores list based on the score value (assuming the score is a number)
         allScores.sort((score1, score2) -> {
             // Split the score entries to extract the score values
